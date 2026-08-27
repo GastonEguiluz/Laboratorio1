@@ -44,6 +44,10 @@ EJECUTAR_SECUENCIA:
     breq LLAMAR_SECUENCIA_3
     cpi secuencia, 3
     breq LLAMAR_SECUENCIA_4
+    cpi secuencia, 4
+    breq LLAMAR_SECUENCIA_5
+    cpi secuencia, 5
+    breq LLAMAR_SECUENCIA_6
     ret
 
 LLAMAR_SECUENCIA_1:
@@ -60,6 +64,14 @@ LLAMAR_SECUENCIA_3:
 
 LLAMAR_SECUENCIA_4:
     rcall SECUENCIA_4
+    ret
+
+LLAMAR_SECUENCIA_5:
+    rcall SECUENCIA_5
+    ret
+
+LLAMAR_SECUENCIA_6:
+    rcall SECUENCIA_6
     ret
 
 SECUENCIA_1:
@@ -140,6 +152,35 @@ PATRON_42_EXTERIOR:
 
 PATRON_81_EXTERIOR:
     ldi patron, 0x81
+    ret
+
+SECUENCIA_5:
+    cpi patron, 0
+    brne MOSTRAR_SECUENCIA_5
+    ldi patron, 0xAA
+
+MOSTRAR_SECUENCIA_5:
+    out PORTD, patron
+    rcall RETARDO_PASO
+    com patron
+    ret
+
+SECUENCIA_6:
+    cpi patron, 0
+    brne MOSTRAR_SECUENCIA_6
+    ldi patron, 0x01
+
+MOSTRAR_SECUENCIA_6:
+    out PORTD, patron
+    rcall RETARDO_PASO
+    cpi patron, 0xFF
+    breq REINICIAR_SECUENCIA_6
+    lsl patron
+    ori patron, 0x01
+    ret
+
+REINICIAR_SECUENCIA_6:
+    clr patron
     ret
 
 RETARDO_PASO:
