@@ -36,6 +36,58 @@ PRINCIPAL:
     rjmp PRINCIPAL
 
 EJECUTAR_SECUENCIA:
+    cpi secuencia, 0
+    breq LLAMAR_SECUENCIA_1
+    cpi secuencia, 1
+    breq LLAMAR_SECUENCIA_2
+    ret
+
+LLAMAR_SECUENCIA_1:
+    rcall SECUENCIA_1
+    ret
+
+LLAMAR_SECUENCIA_2:
+    rcall SECUENCIA_2
+    ret
+
+SECUENCIA_1:
+    cpi patron, 0
+    brne MOSTRAR_SECUENCIA_1
+    ldi patron, 0x01
+
+MOSTRAR_SECUENCIA_1:
+    out PORTD, patron
+    rcall RETARDO_PASO
+    lsl patron
+    ret
+
+SECUENCIA_2:
+    cpi patron, 0
+    brne MOSTRAR_SECUENCIA_2
+    ldi patron, 0x80
+
+MOSTRAR_SECUENCIA_2:
+    out PORTD, patron
+    rcall RETARDO_PASO
+    lsr patron
+    ret
+
+RETARDO_PASO:
+    ldi retardo1, 16
+
+RETARDO_PASO_1:
+    ldi retardo2, 255
+
+RETARDO_PASO_2:
+    ldi retardo3, 255
+
+RETARDO_PASO_3:
+    dec retardo3
+    brne RETARDO_PASO_3
+    dec retardo2
+    brne RETARDO_PASO_2
+    dec retardo1
+    brne RETARDO_PASO_1
     ret
 
 LEER_BOTONES:
