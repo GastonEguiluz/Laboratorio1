@@ -1,0 +1,7 @@
+/tmp/
+**/Debug/
+**/Release/
+*.obj
+*.hex
+*.map
+*.lst
