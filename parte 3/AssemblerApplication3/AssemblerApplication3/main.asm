@@ -50,6 +50,7 @@ EJECUTAR_SECUENCIA:
     breq LLAMAR_SECUENCIA_6
     cpi secuencia, 6
     breq LLAMAR_SECUENCIA_7
+    rcall SECUENCIA_8
     ret
 
 LLAMAR_SECUENCIA_1:
@@ -205,6 +206,12 @@ MOSTRAR_SECUENCIA_7:
 
 REINICIAR_SECUENCIA_7:
     clr patron
+    ret
+
+SECUENCIA_8:
+    out PORTD, patron
+    rcall RETARDO_PASO
+    com patron
     ret
 
 RETARDO_PASO:
