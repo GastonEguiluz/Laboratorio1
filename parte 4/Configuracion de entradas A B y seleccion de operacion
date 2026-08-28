@@ -1,0 +1,46 @@
+.include "m328pdef.inc"
+
+.org 0x0000
+    rjmp RESET
+
+RESET:
+
+    ; Configuracion del Stack
+    ldi r16, high(RAMEND)
+    out SPH, r16
+
+    ldi r16, low(RAMEND)
+    out SPL, r16
+
+    ; PORTD = entradas
+    ldi r16, 0x00
+    out DDRD, r16
+
+    ; PORTB
+    ldi r16, 0b00111000
+    out DDRB, r16
+
+    ; PORTC
+    ldi r16, 0b00001111
+    out DDRC, r16
+
+
+MAIN:
+
+    ; Leer A y B
+    in r16, PIND
+
+    ; A = PD0-PD3
+    mov r18, r16
+    andi r18, 0x0F
+
+    ; B = PD4-PD7
+    swap r16
+    andi r16, 0x0F
+    mov r19, r16
+
+    ; Leer seleccion
+    in r17, PINB
+    andi r17, 0x07
+
+    rjmp MAIN
