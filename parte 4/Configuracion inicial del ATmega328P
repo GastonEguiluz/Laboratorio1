@@ -1,0 +1,33 @@
+.include "m328pdef.inc"
+
+.org 0x0000
+    rjmp RESET
+
+RESET:
+
+    ; Configuracion del Stack
+    ldi r16, high(RAMEND)
+    out SPH, r16
+
+    ldi r16, low(RAMEND)
+    out SPL, r16
+
+    ; PORTD = entradas
+    ; A = PD0-PD3
+    ; B = PD4-PD7
+    ldi r16, 0x00
+    out DDRD, r16
+
+    ; PORTB
+    ; PB0-PB2 = seleccion
+    ; PB3-PB5 = resultado
+    ldi r16, 0b00111000
+    out DDRB, r16
+
+    ; PORTC
+    ; PC0-PC3 = banderas/salida
+    ldi r16, 0b00001111
+    out DDRC, r16
+
+MAIN:
+    rjmp MAIN
